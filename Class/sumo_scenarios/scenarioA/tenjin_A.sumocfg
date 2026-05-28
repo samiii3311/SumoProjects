@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ============================================================
+  tenjin_A.sumocfg  -  シナリオA（整備前）メイン設定ファイル
+  天神通線（北側）を一方通行に制限したネットワーク
+  ============================================================
+  実行コマンド:
+    sumo-gui -c scenarioA/tenjin_A.sumocfg
+    sumo    -c scenarioA/tenjin_A.sumocfg   （GUI無し）
+    python traci_dynamic_routing.py --scenario A
+-->
+
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
+
+  <!-- ========================================================
+       入力ファイル
+  ======================================================== -->
+  <input>
+    <!-- ネットワーク: netconvertで生成 (天神通線=一方通行) -->
+    <net-file value="../network/tenjin_A.net.xml"/>
+
+    <!-- 車両ルート・フロー -->
+    <route-files value="routes_A.rou.xml"/>
+
+    <!-- 追加設定（信号・検知器） -->
+    <additional-files value="tl_A.add.xml"/>
+  </input>
+
+  <!-- ========================================================
+       出力ファイル
+  ======================================================== -->
+  <output>
+    <!-- トリップ情報（個車の出発・到着・移動時間） -->
+    <tripinfo-output value="output/tripinfo_A.xml"/>
+
+    <!-- エッジ別統計（移動時間・速度・密度） -->
+    <edgedata-output value="output/edgedata_A.xml"/>
+
+    <!-- 信号状態 -->
+    <tls-states-output value="output/tls_states_A.xml"/>
+
+    <!-- 要約統計（ステップ毎） -->
+    <summary-output value="output/summary_A.xml"/>
+
+    <!-- CO2・燃料消費（オプション） -->
+    <emission-output value="output/emission_A.xml"/>
+
+    <!-- FCD (全車両の位置・速度をステップ毎に記録、容量注意) -->
+    <!-- <fcd-output value="output/fcd_A.xml"/> -->
+  </output>
+
+  <!-- ========================================================
+       シミュレーション時間設定
+       （Excelパラメータ設定ファイル「車両台数設定」シートより）
+  ======================================================== -->
+  <time>
+    <begin value="0"/>        <!-- 0秒 = 0:00:00 -->
+    <end value="86400"/>      <!-- 86400秒 = 24:00:00 -->
+    <step-length value="1"/>  <!-- 1秒/ステップ（推奨） -->
+  </time>
+
+  <!-- ========================================================
+       シミュレーション動作設定
+  ======================================================== -->
+  <processing>
+    <!-- 乱数シード（再現性のため固定） -->
+    <seed value="42"/>
+
+    <!-- 出発待ち車両の最大待ち時間（超えると削除） -->
+    <max-depart-delay value="900"/>
+
+    <!-- 車両間のギャップが最小値を下回ったら警告 -->
+    <ignore-route-errors value="false"/>
+
+    <!-- teleportを許可（渋滞で動けない車両を救済） -->
+    <time-to-teleport value="300"/>
+
+    <!-- 横方向移動モデル -->
+    <lateral-resolution value="0.8"/>
+
+    <!-- 交差点でのチェックボックス通過を厳密に制御 -->
+    <no-internal-links value="false"/>
+  </processing>
+
+  <!-- ========================================================
+       ルーティング設定
+       TraCIによる動的再探索と組み合わせて使用
+  ======================================================== -->
+  <routing>
+    <!-- デフォルトルーティングアルゴリズム -->
+    <routing-algorithm value="dijkstra"/>
+
+    <!-- 重みとして旅行時間を使用 -->
+    <weight-attribute value="traveltime"/>
+
+    <!-- 適応的ルーティング（TraCIと併用時はfalse推奨） -->
+    <device.rerouting.active value="false"/>
+  </routing>
+
+  <!-- ========================================================
+       GUI設定（sumo-gui使用時）
+  ======================================================== -->
+  <gui_only>
+    <!-- 表示設定ファイル（色・スケール等） -->
+    <!-- <gui-settings-file value="../view_settings.xml"/> -->
+
+    <!-- 起動時に自動再生 -->
+    <start value="false"/>
+
+    <!-- 表示速度倍率（0=無制限） -->
+    <delay value="50"/>
+  </gui_only>
+
+  <!-- ========================================================
+       レポート設定
+  ======================================================== -->
+  <report>
+    <!-- 進捗表示間隔（秒） -->
+    <verbose value="true"/>
+    <print-options value="false"/>
+    <log value="output/log_A.txt"/>
+    <message-log value="output/messages_A.txt"/>
+    <no-step-log value="false"/>
+  </report>
+
+</configuration>

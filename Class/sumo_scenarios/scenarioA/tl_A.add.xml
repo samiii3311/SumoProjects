@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ============================================================
+  tl_A.add.xml  -  シナリオA（整備前）信号制御設定
+  天神通線一方通行時の信号タイミング
+  ============================================================
+  Excelパラメータ設定（信号制御設定シート）より:
+    市役所入口: 青(主)45s / 青(副)30s / 右折10s / サイクル95s
+    日本銀行前: 青(主)50s / 青(副)35s / 右折10s / サイクル105s
+    天神南    : 青(主)40s / 青(副)30s / 右折 8s / サイクル88s
+    大丸前    : 青(主)35s / 青(副)25s / 右折 0s / サイクル70s
+    赤坂交差点: 青(主)50s / 青(副)40s / 右折12s / サイクル112s
+  
+  ※ phaseの dur は秒単位
+  ※ state文字列: G=青 g=弱青(交差側優先) y=黄 r=赤
+  ※ シナリオA: 天神通線側は青時間を短縮（一方通行のため交通量少）
+-->
+
+<additional xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/additional_file.xsd">
+
+  <!-- ============================================================
+       検知器 (E2 Loop Detector) — 混雑モニタリング用
+       TraCIスクリプトがこれらの値を読んで経路再探索を判断する
+  ============================================================ -->
+
+  <!-- 渡辺通り（北向き）混雑検知 -->
+  <laneAreaDetector id="det_watanabe_n"
+                    lane="watanabe_n_0"
+                    pos="0" endPos="-1"
+                    freq="60"
+                    file="output/det_watanabe_n.xml"
+                    friendlyPos="true"/>
+
+  <!-- 渡辺通り（南向き）混雑検知 -->
+  <laneAreaDetector id="det_watanabe_s"
+                    lane="watanabe_s_0"
+                    pos="0" endPos="-1"
+                    freq="60"
+                    file="output/det_watanabe_s.xml"
+                    friendlyPos="true"/>
+
+  <!-- 明治通り（東向き）混雑検知 -->
+  <laneAreaDetector id="det_meiji_e"
+                    lane="meiji_e_0"
+                    pos="0" endPos="-1"
+                    freq="60"
+                    file="output/det_meiji_e.xml"
+                    friendlyPos="true"/>
+
+  <!-- 昭和通り（西向き） -->
+  <laneAreaDetector id="det_showa_w"
+                    lane="showa_w_0"
+                    pos="0" endPos="-1"
+                    freq="60"
+                    file="output/det_showa_w.xml"
+                    friendlyPos="true"/>
+
+  <!-- 天神通線（北向き、シナリオAでは一方通行のみ） -->
+  <laneAreaDetector id="det_tenjin_dori_n"
+                    lane="tenjin_dori_n_0"
+                    pos="0" endPos="-1"
+                    freq="60"
+                    file="output/det_tenjin_dori_n.xml"
+                    friendlyPos="true"/>
+
+
+  <!-- ============================================================
+       信号制御プログラム
+       
+       state文字列の列数 = 交差点の信号フェーズ数（レーン数に対応）
+       ※ 実際のstate列数はnet.xmlの交差点レーン数に合わせること
+       
+       簡略化した4方向×2レーン = 8列で記述（例示）
+       列順: [主方向-直進] [主方向-右折] [副方向-直進] [副方向-右折]
+              × 2レーン = 8
+  ============================================================ -->
+
+  <!-- 市役所入口交差点 (tl_cityhall)
+       サイクル長: 45 + 3(黄) + 30 + 3(黄) + 10(右折) + 4(赤間) = 95秒
+       シナリオA: 天神通線側の通過を制限（一方通行対応）
+  -->
+  <tlLogic id="tl_cityhall" type="static" programID="scenarioA" offset="0">
+    <!-- 主方向（渡辺通り方面）青 45秒 -->
+    <phase duration="45" state="GGrrrrGGrrrr"/>
+    <!-- 主方向 黄 3秒 -->
+    <phase duration="3"  state="yyrrrryyrrrrr"/>
+    <!-- 右折フェーズ 10秒 -->
+    <phase duration="10" state="rrGrrrrrGrrr"/>
+    <!-- 右折 黄 3秒 -->
+    <phase duration="3"  state="rryrrrrryrrrr"/>
+    <!-- 副方向（天神通線/昭和通り）青 30秒 -->
+    <phase duration="30" state="rrrrGGrrrrGG"/>
+    <!-- 副方向 黄 3秒 -->
+    <phase duration="3"  state="rrrryyrrrryy"/>
+    <!-- 全赤（赤間）1秒 -->
+    <phase duration="1"  state="rrrrrrrrrrrr"/>
+  </tlLogic>
+
+  <!-- 日本銀行前交差点 (tl_boj)
+       サイクル長: 50 + 3 + 35 + 3 + 10 + 4 = 105秒
+  -->
+  <tlLogic id="tl_boj" type="static" programID="scenarioA" offset="15">
+    <!-- 主方向（明治通り）青 50秒 -->
+    <phase duration="50" state="GGrrrrGGrrrr"/>
+    <phase duration="3"  state="yyrrrryyrrrrr"/>
+    <!-- 右折フェーズ 10秒 -->
+    <phase duration="10" state="rrGrrrrrGrrr"/>
+    <phase duration="3"  state="rryrrrrryrrrr"/>
+    <!-- 副方向（渡辺通り）青 35秒 -->
+    <phase duration="35" state="rrrrGGrrrrGG"/>
+    <phase duration="3"  state="rrrryyrrrryy"/>
+    <phase duration="1"  state="rrrrrrrrrrrr"/>
+  </tlLogic>
+
+  <!-- 天神南交差点 (tl_tenjin_south)
+       サイクル長: 40 + 3 + 30 + 3 + 8 + 4 = 88秒
+       シナリオA: 天神通線フェーズは北向きのみ（一方通行）
+  -->
+  <tlLogic id="tl_tenjin_south" type="static" programID="scenarioA" offset="30">
+    <!-- 主方向（昭和通り）青 40秒 -->
+    <phase duration="40" state="GGrrrrGGrrrr"/>
+    <phase duration="3"  state="yyrrrryyrrrrr"/>
+    <!-- 右折フェーズ 8秒 -->
+    <phase duration="8"  state="rrGrrrrrGrrr"/>
+    <phase duration="3"  state="rryrrrrryrrrr"/>
+    <!-- 副方向（天神通線北向きのみ）青 30秒 -->
+    <phase duration="30" state="rrrrGGrrrrGG"/>
+    <phase duration="3"  state="rrrryyrrrryy"/>
+    <phase duration="1"  state="rrrrrrrrrrrr"/>
+  </tlLogic>
+
+  <!-- 大丸前交差点 (tl_daimaru)
+       サイクル長: 35 + 3 + 25 + 3 + 0 + 4 = 70秒
+       右折禁止のためrightTurnPhaseなし
+       歩行者多いため短サイクル
+  -->
+  <tlLogic id="tl_daimaru" type="static" programID="scenarioA" offset="0">
+    <!-- 主方向青 35秒 -->
+    <phase duration="35" state="GGrrGGrr"/>
+    <phase duration="3"  state="yyrryyrr"/>
+    <!-- 副方向青 25秒 -->
+    <phase duration="25" state="rrGGrrGG"/>
+    <phase duration="3"  state="rryyrryy"/>
+    <!-- 全赤 4秒 -->
+    <phase duration="4"  state="rrrrrrrr"/>
+  </tlLogic>
+
+  <!-- 赤坂交差点（国体道路）(tl_akasaka)
+       サイクル長: 50 + 3 + 40 + 3 + 12 + 4 = 112秒
+       大型車多いため長め
+  -->
+  <tlLogic id="tl_akasaka" type="static" programID="scenarioA" offset="45">
+    <!-- 主方向（国体道路）青 50秒 -->
+    <phase duration="50" state="GGrrrrGGrrrr"/>
+    <phase duration="3"  state="yyrrrryyrrrrr"/>
+    <!-- 右折フェーズ 12秒 -->
+    <phase duration="12" state="rrGrrrrrGrrr"/>
+    <phase duration="3"  state="rryrrrrryrrrr"/>
+    <!-- 副方向（赤坂通り）青 40秒 -->
+    <phase duration="40" state="rrrrGGrrrrGG"/>
+    <phase duration="3"  state="rrrryyrrrryy"/>
+    <phase duration="1"  state="rrrrrrrrrrrr"/>
+  </tlLogic>
+
+</additional>
