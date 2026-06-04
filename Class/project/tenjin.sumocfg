@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+    <input>
+        <net-file value="tenjin.net.xml"/>
+        <route-files value="tenjin.rou.xml"/>
+    </input>
+
+    <time>
+        <begin value="0"/>
+        <end value="3600"/>
+    </time>
+
+    <output>
+        <tripinfo-output value="tripinfo.xml"/>
+        <emission-output value="emission.xml"/>
+    </output>
+</configuration>
