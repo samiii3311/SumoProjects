@@ -2,12 +2,15 @@
 <configuration>
     <input>
         <net-file value="tenjin_fixed.net.xml"/>
-        <route-files value="routes.rou.xml"/>
+        <route-files value="traffic.rou.xml"/>
     </input>
     <time>
         <begin value="0"/>
         <end value="10800"/>
     </time>
+    <routing>
+        <junction-taz value="true"/>
+    </routing>
     <output>
         <tripinfo-output value="tripinfo.xml"/>
     </output>
