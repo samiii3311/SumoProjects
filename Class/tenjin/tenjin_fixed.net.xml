@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 2026-06-18T13:34:59.979137+09:00 by Eclipse SUMO netedit 1.26.0
+<!-- generated on 2026-06-18T13:38:46.306483+09:00 by Eclipse SUMO netedit 1.26.0
 <neteditConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/neteditConfiguration.xsd">
 
     <input>
@@ -3807,7 +3807,7 @@
         <lane id="-96533041_0" index="0" speed="22.22" length="24.40" width="2.30" shape="1956.66,1093.19 1980.52,1098.28"/>
         <lane id="-96533041_1" index="1" speed="22.22" length="24.40" width="2.30" shape="1957.14,1090.94 1981.00,1096.04"/>
     </edge>
-    <edge id="-E0" from="e12" to="3586982923" priority="-1">
+    <edge id="-E0" from="p12" to="3586982923" priority="-1">
         <lane id="-E0_0" index="0" speed="13.89" length="26.20" shape="1879.71,1007.50 1854.96,998.89"/>
     </edge>
     <edge id="-E13" from="J4" to="1118311215" priority="-1">
@@ -3846,7 +3846,7 @@
     <edge id="-E8" from="p10" to="2204227876" priority="-1">
         <lane id="-E8_0" index="0" speed="13.89" length="19.66" shape="1940.36,827.99 1933.58,809.53"/>
     </edge>
-    <edge id="-E9" from="p7" to="J9" priority="-1">
+    <edge id="-E9" from="p8" to="J9" priority="-1">
         <lane id="-E9_0" index="0" speed="13.89" length="22.82" shape="1886.04,752.55 1908.83,751.40"/>
     </edge>
     <edge id="1328724321" from="12292987669" to="826290678" priority="11" type="highway.secondary">
@@ -5082,7 +5082,7 @@
     <edge id="E31" from="826290633" to="p3" priority="-1" spreadType="center">
         <lane id="E31_0" index="0" speed="13.89" length="17.51" shape="1769.69,830.36 1785.43,838.04"/>
     </edge>
-    <edge id="E32" from="J9" to="p8" priority="-1" spreadType="center">
+    <edge id="E32" from="J9" to="p7" priority="-1" spreadType="center">
         <lane id="E32_0" index="0" speed="13.89" length="22.25" shape="1909.37,747.62 1887.48,743.66"/>
     </edge>
     <edge id="E33" from="3586982923" to="p11" priority="-1" spreadType="center">
@@ -6950,7 +6950,6 @@
         <request index="7" response="00111110" foes="00111110" cont="0"/>
     </junction>
     <junction id="e1" type="dead_end" x="1478.40" y="956.63" incLanes="-374632640#13_0 -374632640#13_1" intLanes="" shape="1478.40,956.63 1479.78,951.82 1478.40,956.63"/>
-    <junction id="e12" type="dead_end" x="1879.18" y="1009.01" incLanes="" intLanes="" shape="1879.18,1009.01 1880.23,1005.99" name="Across Fuku Prarking"/>
     <junction id="e2" type="priority" x="1479.15" y="1079.28" incLanes="E23_0 E23_1 E23_2" intLanes=":e2_0_0 :e2_0_1 :e2_0_2 :e2_0_3" shape="1493.94,1067.61 1497.77,1076.41 1497.98,1079.02 1495.45,1088.69">
         <request index="0" response="0000" foes="0000" cont="0"/>
         <request index="1" response="0000" foes="0000" cont="0"/>
@@ -6989,13 +6988,14 @@
     <junction id="p1" type="dead_end" x="1707.42" y="1144.30" incLanes="E2_0" intLanes="" shape="1708.05,1141.16 1707.42,1144.30" name="North Tenjin Parking Enter"/>
     <junction id="p10" type="dead_end" x="1938.86" y="828.54" incLanes="" intLanes="" shape="1938.86,828.54 1941.86,827.44" name="Seiwa Park Parking"/>
     <junction id="p11" type="dead_end" x="1871.64" y="1013.71" incLanes="E33_0" intLanes="" shape="1870.79,1015.07 1872.49,1012.35"/>
+    <junction id="p12" type="dead_end" x="1879.18" y="1009.01" incLanes="" intLanes="" shape="1879.18,1009.01 1880.23,1005.99" name="Across Fuku Prarking"/>
     <junction id="p2" type="dead_end" x="1677.38" y="1132.06" incLanes="" intLanes="" shape="1677.38,1132.06 1676.15,1129.11" name="North Tenjin Parking Exit"/>
     <junction id="p3" type="dead_end" x="1785.43" y="838.04" incLanes="E31_0" intLanes="" shape="1784.73,839.48 1786.13,836.60"/>
     <junction id="p4" type="dead_end" x="1788.48" y="833.14" incLanes="" intLanes="" shape="1788.48,833.14 1789.25,830.04" name="Fuku City Hall Parking"/>
     <junction id="p5" type="dead_end" x="1686.16" y="712.36" incLanes="E10_0" intLanes="" shape="1686.46,709.17 1686.16,712.36" name="Tenjin Underground Parking Enter"/>
     <junction id="p6" type="dead_end" x="1853.38" y="763.34" incLanes="" intLanes="" shape="1853.38,763.34 1851.28,760.92" name="Tenjin Underground Parking Exit"/>
-    <junction id="p7" type="dead_end" x="1885.96" y="750.95" incLanes="" intLanes="" shape="1885.96,750.95 1886.12,754.15" name="Erugaara Parking"/>
-    <junction id="p8" type="dead_end" x="1887.48" y="743.66" incLanes="E32_0" intLanes="" shape="1887.76,742.09 1887.20,745.23"/>
+    <junction id="p7" type="dead_end" x="1887.48" y="743.66" incLanes="E32_0" intLanes="" shape="1887.76,742.09 1887.20,745.23"/>
+    <junction id="p8" type="dead_end" x="1885.96" y="750.95" incLanes="" intLanes="" shape="1885.96,750.95 1886.12,754.15" name="Erugaara Parking"/>
     <junction id="p9" type="dead_end" x="1931.14" y="830.38" incLanes="j22_0" intLanes="" shape="1929.54,830.50 1932.74,830.26"/>
 
     <junction id=":1118310031_9_0" type="internal" x="2057.23" y="762.93" incLanes=":1118310031_1_0 -68756871#1_0" intLanes=":1118310031_4_0 :1118310031_5_0 :1118310031_6_0 :1118310031_7_0"/>
