@@ -7,9 +7,9 @@ if __name__ == "__main__":
     
     # 1. LIST YOUR MAPS
     configs = [
-        "./tenjin_one_way.sumocfg",
-        "./tenjin_base.sumocfg",
-        "./tenjin_bottom_merge.sumocfg"
+        "./tenjin_one_way.sumocfg",#A
+        "./tenjin_base.sumocfg",#B
+        "./tenjin_bottom_merge.sumocfg"#C
     ]
 
     all_results = {}
