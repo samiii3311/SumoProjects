@@ -24,7 +24,7 @@ def run_and_collect_traci_data(config):
     net_path = os.path.join(os.path.dirname(config), net_file_name)
     net = sumolib.net.readNet(net_path, withPrograms=False, withLatestPrograms=False)
 
-    sumo_binary = checkBinary('sumo')
+    sumo_binary = checkBinary('sumo-gui')
     
     # Start TraCI with A* routing enabled
     traci.start([
@@ -37,7 +37,7 @@ def run_and_collect_traci_data(config):
     vehicle_wait_times = {}
     parked_cars = [] 
     
-    for step in range(14400): 
+    for step in range(86400): 
         # 1. CHECK FOR ARRIVALS
         arrived_vehicles = traci.simulation.getArrivedIDList()
         for veh_id in arrived_vehicles:
@@ -80,17 +80,15 @@ def run_and_collect_traci_data(config):
                         route_id = f"route_{new_veh_id}"
                         traci.route.add(route_id, route_edges)
                         traci.vehicle.add(new_veh_id, routeID=route_id)
+                        
+                        # Apply dynamic traffic routing
+                        traci.vehicle.rerouteTraveltime(new_veh_id, currentTravelTimes=True)
                         print(f"  Respawned vehicle {new_veh_id} from {park_out_node} to {random_exit} at step {step}")
 
             except Exception as e:
                 pass 
 
         # 3. TRACK LIVE WAIT TIMES
-        newly_departed = traci.simulation.getDepartedIDList()
-        for veh_id in newly_departed:
-            traci.vehicle.rerouteTraveltime(veh_id, currentTravelTimes=True)
-
-        # Track the wait times for all active cars
         active_vehicles = traci.vehicle.getIDList()
         for veh_id in active_vehicles:
             vehicle_wait_times[veh_id] = traci.vehicle.getAccumulatedWaitingTime(veh_id)
