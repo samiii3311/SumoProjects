@@ -1,5 +1,5 @@
 # Your nodes (junctions)
-exits = [f"e{i}" for i in range(1, 9)] # e1 to e8
+exits = [f"e{i}" for i in range(1, 10)] # e1 to e9
 parking_in = ["p1", "p3", "p5", "p7", "p9", "p11"]
 parking_out = ["p2", "p4", "p6", "p8", "p10", "p12"]
 

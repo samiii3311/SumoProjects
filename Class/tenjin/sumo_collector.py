@@ -14,7 +14,7 @@ PARKING_MAP = {
     "p9": "p10", 
     "p11": "p12"
 }
-EXTERNAL_EDGES = [f"e{i}" for i in range(1, 9)] 
+EXTERNAL_EDGES = [f"e{i}" for i in range(1, 10)]  # e1 to e9
 
 def run_and_collect_traci_data(config):
     """Runs the SUMO simulation with A* routing and collects wait times."""
