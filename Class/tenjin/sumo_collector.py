@@ -24,7 +24,7 @@ def run_and_collect_traci_data(config):
     net_path = os.path.join(os.path.dirname(config), net_file_name)
     net = sumolib.net.readNet(net_path, withPrograms=False, withLatestPrograms=False)
 
-    sumo_binary = checkBinary('sumo-gui')
+    sumo_binary = checkBinary('sumo')
     
     # Start TraCI with A* routing enabled
     traci.start([
