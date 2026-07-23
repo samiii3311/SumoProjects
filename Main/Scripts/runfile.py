@@ -1,7 +1,7 @@
 import os
 
 # Import our custom function from the other file
-from Main.tenjin.Scripts.sumo_collector import run_and_collect_traci_data
+from sumo_collector import run_and_collect_traci_data
 
 if __name__ == "__main__":
     
@@ -12,6 +12,9 @@ if __name__ == "__main__":
         "../Config/tenjin_bottom_merge.sumocfg"#C
     ]
 
+    terminal = 'sumo-gui'  # 'sumo-gui' for gui, 'sumo' for command-line mode
+    runTime = 86400  # 24 hours in seconds
+
     all_results = {}
 
     # 2. RUN THE SIMULATIONS
@@ -20,7 +23,7 @@ if __name__ == "__main__":
         print(f"\nStarting TraCI collection for: {config}...")
         
         # Call the imported function
-        all_results[map_name] = run_and_collect_traci_data(config)
+        all_results[map_name] = run_and_collect_traci_data(config,terminal,runTime)
         print(f"  Finished and closed: {config}")
 
     # 3. PRINT THE FINAL REPORT

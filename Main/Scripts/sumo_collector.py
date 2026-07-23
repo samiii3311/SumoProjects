@@ -16,7 +16,7 @@ PARKING_MAP = {
 }
 EXTERNAL_EDGES = [f"e{i}" for i in range(1, 10)]  # e1 to e9
 
-def run_and_collect_traci_data(config):
+def run_and_collect_traci_data(config,terminal,time):
     """Runs the SUMO simulation with A* routing and collects wait times."""
     
     tree = ET.parse(config)
@@ -24,7 +24,7 @@ def run_and_collect_traci_data(config):
     net_path = os.path.join(os.path.dirname(config), net_file_name)
     net = sumolib.net.readNet(net_path, withPrograms=False, withLatestPrograms=False)
 
-    sumo_binary = checkBinary('sumo-gui')
+    sumo_binary = checkBinary(terminal)
     
     # Start TraCI with A* routing enabled
     traci.start([
@@ -37,7 +37,7 @@ def run_and_collect_traci_data(config):
     vehicle_wait_times = {}
     parked_cars = [] 
     
-    for step in range(86400): 
+    for step in range(time): 
         # 1. CHECK FOR ARRIVALS
         arrived_vehicles = traci.simulation.getArrivedIDList()
         for veh_id in arrived_vehicles:
